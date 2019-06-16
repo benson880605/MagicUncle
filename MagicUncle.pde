@@ -112,14 +112,14 @@ void draw() {
   
   // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
   
-    switch(key) {
+    switch(keyCode) {
       
-      case 'w':
+      case UP:
         magicA_Uncle.uncleY-= 80;
         magicA_Uncle.boundryLimit();
       break;
       
-      case 's':
+      case DOWN:
         magicA_Uncle.uncleY+= 80;
         magicA_Uncle.boundryLimit();
       break;
