@@ -56,6 +56,15 @@ float B_gameTimer = 1.5*60*60;
 
 Player player;
 Vegetable vegetables[];
+
+//cookingGameState
+final int COOKING_GAME_START = 30;
+final int COOKING_GAME_RUN = 31;
+final int COOKING_GAME_WIN = 32;
+final int COOKING_GAME_LOSE = 33;
+
+
+
 ////////////////////////////////////////////////////////////
 
 
@@ -293,8 +302,25 @@ void draw() {
       case '7':
       gameState=BUBBLE_GAME_LOSE;
       break; 
+      case '8':
+      gameState=COOKING_GAME_START;
+      break; 
+      case '9':
+      gameState=COOKING_GAME_RUN;
+      break; 
+      case '0':
+      gameState=COOKING_GAME_WIN;
+      break; 
+      case 'a':
+      gameState=COOKING_GAME_LOSE;
+      break; 
+      
       //jump to specific stage//
       
+      case DOWN:
+        magicA_Uncle.uncleY+= 80;
+        magicA_Uncle.boundryLimit();
+      break;
     }
   // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
   switch(gameState){
