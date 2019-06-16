@@ -295,10 +295,6 @@ void draw() {
       break; 
       //jump to specific stage//
       
-      case DOWN:
-        magicA_Uncle.uncleY+= 80;
-        magicA_Uncle.boundryLimit();
-      break;
     }
   // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
   switch(gameState){
