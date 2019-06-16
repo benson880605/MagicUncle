@@ -69,6 +69,27 @@ PImage[][]eggImages, steakImages, baconImages;
 
 int itemSize = 132;
 
+//shoot gamestate & variable
+PImage D_background6,D_gameover,  D_gamewin;
+PImage D_girlImg, D_girlhurtImg,D_uncleImg;
+PImage D_carrotImg,D_cabbageImg;
+PImage D_hamburgerImg;
+PImage D_startImg;
+
+int D_foodNumber = 10;
+int D_timer = 5400;
+int D_score = 0;
+int D_scoreTextSize;
+PFont D_font;
+
+Girl magicGirl;
+D_Uncle uncle;
+D_Food[] foods;
+Arrowhead arrowhead;
+
+
+final int D_GAME_START = 40,D_GAME_RUN = 41,D_GAME_OVER = 42,D_GAME_WIN = 43;
+
 
 
 ////////////////////////////////////////////////////////////
@@ -92,7 +113,7 @@ void setup() {
   lose = loadImage("img/A_lose.png");
   
   gameState = A_GAME_RUN;
-  //bubble_setup//
+//bubble_setup//
   //imageMode(CENTER);
   size(960,540);
   B_uncleLeft = loadImage("img/B_uncleLeft.png");
@@ -105,7 +126,31 @@ void setup() {
   frameRate(60);
   
   vegetables = new Vegetable[B_maxVegetableCount];
-  //bubble_setup//
+//bubble_setup//
+  
+//shoot setup//
+    //size(960, 540, P2D);
+    //frameRate(60);
+    D_background6 = loadImage("img/D_background.png");
+    D_gameover = loadImage("img/D_lose.png");
+    D_gamewin = loadImage("img/D_win.png");
+    D_uncleImg = loadImage("img/D_uncle.png");
+    D_girlImg = loadImage("img/girl.png");
+    D_carrotImg = loadImage("img/carrot.png");
+    D_cabbageImg = loadImage("img/cabbage.png");
+    D_hamburgerImg = loadImage("img/hamburger.png");
+    D_girlhurtImg = loadImage("img/girlhurt.png");
+    D_startImg = loadImage("img/D_start.png");
+    
+    //font
+    D_font = createFont("font/comic.ttf", 54);
+    textFont(D_font);
+    
+    //object
+    magicGirl = new Girl(50,50);
+    uncle = new D_Uncle(width - 150, height-170);
+    arrowhead = new Arrowhead(width - 180, height-120);
+//shoot setup//
   
 }
 
@@ -113,6 +158,7 @@ void draw() {
     
     
   switch(gameState) {
+//cityrunState//
     case A_GAME_RUN:
    
     // city Back
@@ -167,7 +213,9 @@ void draw() {
   }
     
     break;
-        //bubbleState//
+//cityrunState//
+    
+//bubbleState//
     case BUBBLE_GAME_START:
     rect(0,0,50,50);
     
@@ -185,92 +233,92 @@ void draw() {
     image(B_vegetable,deadVegetableX3,deadVegetableY3,deadVegetableS3,deadVegetableS3);
     //image(background,width/2,height/2,width,height);
   
-  //gameTimer
-  B_gameTimer--;
-  float B_timeCount = map(B_gameTimer,0,2*50*60,0,width);
-  rectMode(CORNERS);
-  strokeWeight(1);
-  stroke(#754F44);
-  fill(#FDD692);
-  rect(0,530,B_timeCount,540);
-  
-  //accelerate
-  if(accMana<=accManaMax){
-    accMana++;
-  }
-    if(B_accelerate&&accMana>=0){
-      accMana-=6;
+    //gameTimer
+    B_gameTimer--;
+    float B_timeCount = map(B_gameTimer,0,2*50*60,0,width);
+    rectMode(CORNERS);
+    strokeWeight(1);
+    stroke(#754F44);
+    fill(#FDD692);
+    rect(0,530,B_timeCount,540);
+    
+    //accelerate
+    if(accMana<=accManaMax){
+      accMana++;
     }
-    fill(230,200,220);
-    rect(0,500,accMana,510);
-  
-  //drop vegetable
-    B_dropTimer++;
-  if(B_dropTimer >= B_dropInterval){
-    B_dropTimer = 0;
-    drop();
-  }
-  
-  for(int i = 0; i < vegetables.length; i++){
-    if(vegetables[i] != null && vegetables[i].isAlive){
-      vegetables[i].move();
-      vegetables[i].display();
-      
-    }
-  }
-  //player
-  player.update();
-  for(int i = 0; i < player.bubbles.length; i++){
-    if(player.bubbles[i]==null||!player.bubbles[i].isAlive){
-      //blowing bubble animation
-      if(B_upState){
-        image(bubbleDisplay,player.x,player.y,player.bubbleSize,player.bubbleSize);
+      if(B_accelerate&&accMana>=0){
+        accMana-=6;
       }
-     break;  
-    } 
-  }
-
-
-
-//liftStrength  
-  for(int j = 0; j < vegetables.length; j++){
-    if(vegetables[j]!=null){
-      vegetables[j].liftStr=lerp(vegetables[j].liftStr,0,0.2); 
+      fill(230,200,220);
+      rect(0,500,accMana,510);
+    
+    //drop vegetable
+      B_dropTimer++;
+    if(B_dropTimer >= B_dropInterval){
+      B_dropTimer = 0;
+      drop();
     }
-  }
-
-//bubble & vegetables interaction  
-  for(int i = 0; i < player.bubbles.length; i++){
-    for(int j = 0; j < vegetables.length; j++){
-      if(player.bubbles[i]!=null && vegetables[j]!=null && B_isHit(player.bubbles[i].x,player.bubbles[i].y,vegetables[j].x,vegetables[j].y,player.bubbles[i].size/2,vegetables[j].size/2)
-      &&vegetables[j].isAlive&&!vegetables[j].wraped &&  !player.bubbles[i].wrap){
-        if(vegetables[j].size>player.bubbles[i].size){
-          vegetables[j].lift(map((vegetables[j].size-player.bubbles[i].size),0,vegetables[j].size,vegetables[j].speed*20,0));
-          player.bubbles[i].isAlive=false;
-          player.bubbles[i].x=-100;
+    
+    for(int i = 0; i < vegetables.length; i++){
+      if(vegetables[i] != null && vegetables[i].isAlive){
+        vegetables[i].move();
+        vegetables[i].display();
+        
+      }
+    }
+    //player
+    player.update();
+    for(int i = 0; i < player.bubbles.length; i++){
+      if(player.bubbles[i]==null||!player.bubbles[i].isAlive){
+        //blowing bubble animation
+        if(B_upState){
+          image(bubbleDisplay,player.x,player.y,player.bubbleSize,player.bubbleSize);
         }
-        if(player.bubbles[i].size>=vegetables[j].size && !vegetables[j].wraped && !player.bubbles[i].wrap){
-         //player.bubbles[i].x=lerp(vegetables[j].x,player.bubbles[i].x,0.6);
-         //player.bubbles[i].y=lerp(vegetables[j].y,player.bubbles[i].y,0.6);
-         player.bubbles[i].targetX=vegetables[j].x;
-         player.bubbles[i].targetY=vegetables[j].y;
-         vegetables[j].speed=-player.bubbles[i].speed;   
-         vegetables[j].wraped=true;
-         player.bubbles[i].wrap=true;
-        }  
-
-      }  
-      
-    }        
-  }  
-  for(int i = 0;i<player.bubbles.length;i++){
-    if(player.bubbles[i]==null){break;}
-    if(player.bubbles[i].wrap){
-         player.bubbles[i].x=lerp(player.bubbles[i].targetX,player.bubbles[i].x,0.6);
-         player.bubbles[i].y=lerp(player.bubbles[i].targetY,player.bubbles[i].y,0.6); 
-         player.bubbles[i].targetY-=player.bubbles[i].speed;
+       break;  
+      } 
     }
-  }
+  
+  
+  
+  //liftStrength  
+    for(int j = 0; j < vegetables.length; j++){
+      if(vegetables[j]!=null){
+        vegetables[j].liftStr=lerp(vegetables[j].liftStr,0,0.2); 
+      }
+    }
+  
+  //bubble & vegetables interaction  
+    for(int i = 0; i < player.bubbles.length; i++){
+      for(int j = 0; j < vegetables.length; j++){
+        if(player.bubbles[i]!=null && vegetables[j]!=null && B_isHit(player.bubbles[i].x,player.bubbles[i].y,vegetables[j].x,vegetables[j].y,player.bubbles[i].size/2,vegetables[j].size/2)
+        &&vegetables[j].isAlive&&!vegetables[j].wraped &&  !player.bubbles[i].wrap){
+          if(vegetables[j].size>player.bubbles[i].size){
+            vegetables[j].lift(map((vegetables[j].size-player.bubbles[i].size),0,vegetables[j].size,vegetables[j].speed*20,0));
+            player.bubbles[i].isAlive=false;
+            player.bubbles[i].x=-100;
+          }
+          if(player.bubbles[i].size>=vegetables[j].size && !vegetables[j].wraped && !player.bubbles[i].wrap){
+           //player.bubbles[i].x=lerp(vegetables[j].x,player.bubbles[i].x,0.6);
+           //player.bubbles[i].y=lerp(vegetables[j].y,player.bubbles[i].y,0.6);
+           player.bubbles[i].targetX=vegetables[j].x;
+           player.bubbles[i].targetY=vegetables[j].y;
+           vegetables[j].speed=-player.bubbles[i].speed;   
+           vegetables[j].wraped=true;
+           player.bubbles[i].wrap=true;
+          }  
+  
+        }  
+        
+      }        
+    }  
+    for(int i = 0;i<player.bubbles.length;i++){
+      if(player.bubbles[i]==null){break;}
+      if(player.bubbles[i].wrap){
+           player.bubbles[i].x=lerp(player.bubbles[i].targetX,player.bubbles[i].x,0.6);
+           player.bubbles[i].y=lerp(player.bubbles[i].targetY,player.bubbles[i].y,0.6); 
+           player.bubbles[i].targetY-=player.bubbles[i].speed;
+      }
+    }
     break;
     
     case BUBBLE_GAME_WIN:
@@ -280,7 +328,68 @@ void draw() {
     case BUBBLE_GAME_LOSE:
     rect(50,50,width-50,height-50);
     break;
-    //bubbleState//
+//bubbleState//
+    
+//shootState//
+    case D_GAME_START:
+    imageMode(CORNER);
+    image(D_background6,0,0,960,540);
+    image(D_startImg,0,0,960,540);
+    break;
+    
+    case D_GAME_RUN:
+    // background
+    image(D_background6,0,0,960,540);
+    
+    //uncle
+    uncle.display();
+    uncle.update();
+    
+    // Time UI
+    textAlign(LEFT, BOTTOM);
+    String timeString = D_convertFrameToTimeString(D_timer);
+    fill(255);
+    text(timeString, 5, height);
+    
+    // Health UI
+    textAlign(LEFT, BOTTOM);
+    pushStyle();
+    textSize(36);
+    fill(255);
+    text("HP:"+magicGirl.health, 200, height-10);
+    popStyle();
+
+    //time
+    D_timer --;
+    if(D_timer <= 0) gameState = D_GAME_OVER;
+    
+    //girl
+    magicGirl.display();
+    if(D_timer % 600 == 0){
+    magicGirl.summon();
+    }
+        
+    // arrowHead
+    arrowhead.display();
+    
+    if(magicGirl.health<=0){
+      gameState = D_GAME_WIN;
+    }
+    if(D_timer == 0 && magicGirl.health > 0){
+      gameState = D_GAME_OVER;
+    }
+    
+    break;
+    
+    case D_GAME_WIN:
+    image(D_gamewin,0,0,960,540);
+    break;
+    
+    case D_GAME_OVER:
+    image(D_gameover,0,0,960,540);
+    break;
+    
+//shootState//
     
 }    
 }
@@ -319,7 +428,19 @@ void draw() {
       break; 
       case 'a':
       gameState=COOKING_GAME_LOSE;
-      break; 
+      break;
+      case 'b':
+      gameState=D_GAME_START;
+      break;
+      case 'c':
+      gameState=D_GAME_RUN;
+      break;
+      case 'd':
+      gameState=D_GAME_WIN;
+      break;
+      case 'e':
+      gameState=D_GAME_OVER;
+      break;
       
       //jump to specific stage//
       
@@ -328,6 +449,24 @@ void draw() {
         magicA_Uncle.boundryLimit();
       break;
     }
+     switch(key){
+       case 'a':
+      gameState=COOKING_GAME_LOSE;
+      break;
+      case 'b':
+      gameState=D_GAME_START;
+      break;
+      case 'c':
+      gameState=D_GAME_RUN;
+      break;
+      case 'd':
+      gameState=D_GAME_WIN;
+      break;
+      case 'e':
+      gameState=D_GAME_OVER;
+      break;
+     }
+
   // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
   switch(gameState){
     case A_GAME_RUN:
@@ -380,6 +519,8 @@ void draw() {
 //BubbleState//
     }
   }
+  //shootState//
+  
   }
      }
      
@@ -405,12 +546,41 @@ void keyReleased(){
     }
   }
   break;
+  
+//shootState//
+  case D_GAME_START:
+    switch(key){
+      case ENTER:
+      gameState = D_GAME_RUN;
+      break;
+    }
+    break;
+    case D_GAME_RUN:
+    switch(key){
+      case ENTER:
+      uncle.fire();
+      break;
+    }
+    break;
+//shootState//
+
   //add other game here
   //case :
   
   //break;
 }
 }
+
+//shoot function//
+void mouseReleased(){
+  switch(gameState){
+    case D_GAME_RUN:
+    uncle.fire();
+    break;
+  }
+}
+//shoot function//
+
 //bubble_function//
 void drop(){
     for(int i = 0; i < vegetables.length; i++){
@@ -440,3 +610,21 @@ boolean A_isHit(float ax , float ay , float aw , float ah , float bx , float by 
        ay < by + bh){return true;}
     else{return false;}
 }
+
+//shoot function//
+boolean D_isHit(float ax, float ay, float aw, float ah, float bx, float by, float bw, float bh){
+  return  ax + aw > bx &&    // a right edge past b left
+        ax < bx + bw &&    // a left edge past b right
+        ay + ah > by &&    // a top edge past b bottom
+        ay < by + bh;
+}
+
+String D_convertFrameToTimeString(int frames){
+  String result = "";
+  float totalSeconds = float(frames) / 60;
+  result += nf(floor(totalSeconds/60), 2);
+  result += ":";
+  result += nf(floor(totalSeconds%60), 2);
+  return result;
+}
+//shoot function//
