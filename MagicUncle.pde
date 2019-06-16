@@ -97,7 +97,7 @@ final int D_GAME_START = 40,D_GAME_RUN = 41,D_GAME_OVER = 42,D_GAME_WIN = 43;
 
 void setup() {
   
-  size(960 ,540);
+  size(960 ,540,FX2D);
   noCursor();  //
     
   cityFrontImg = loadImage("img/A_cityFront.png"); 
@@ -409,7 +409,7 @@ void draw() {
       gameState=BUBBLE_GAME_START;
       break; 
       case '5':
-      gameState=BUBBLE_GAME_RUN;
+      gameState=D_GAME_START;
       break; 
       case '6':
       gameState=BUBBLE_GAME_WIN;
@@ -426,21 +426,21 @@ void draw() {
       case '0':
       gameState=COOKING_GAME_WIN;
       break; 
-      case 'a':
-      gameState=COOKING_GAME_LOSE;
-      break;
-      case 'b':
-      gameState=D_GAME_START;
-      break;
-      case 'c':
-      gameState=D_GAME_RUN;
-      break;
-      case 'd':
-      gameState=D_GAME_WIN;
-      break;
-      case 'e':
-      gameState=D_GAME_OVER;
-      break;
+      //case 'a':
+      //gameState=COOKING_GAME_LOSE;
+      //break;
+      //case 'b':
+      //gameState=D_GAME_START;
+      //break;
+      //case 'c':
+      //gameState=D_GAME_RUN;
+      //break;
+      //case 'd':
+      //gameState=D_GAME_WIN;
+      //break;
+      //case 'e':
+      //gameState=D_GAME_OVER;
+      //break;
       
       //jump to specific stage//
       
@@ -449,23 +449,23 @@ void draw() {
         magicA_Uncle.boundryLimit();
       break;
     }
-     switch(key){
-       case 'a':
-      gameState=COOKING_GAME_LOSE;
-      break;
-      case 'b':
-      gameState=D_GAME_START;
-      break;
-      case 'c':
-      gameState=D_GAME_RUN;
-      break;
-      case 'd':
-      gameState=D_GAME_WIN;
-      break;
-      case 'e':
-      gameState=D_GAME_OVER;
-      break;
-     }
+     //switch(key){
+     // case 'a':
+     // gameState=COOKING_GAME_LOSE;
+     // break;
+     // case 'b':
+     // gameState=D_GAME_START;
+     // break;
+     // case 'c':
+     // gameState=D_GAME_RUN;
+     // break;
+     // case 'd':
+     // gameState=D_GAME_WIN;
+     // break;
+     // case 'e':
+     // gameState=D_GAME_OVER;
+     // break;
+     //}
 
   // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
   switch(gameState){
