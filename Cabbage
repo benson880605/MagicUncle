@@ -1,0 +1,18 @@
+class Cabbage {
+  Cabbage(float x, float y){
+    image(ccabbage,x,y);
+  }  
+  
+  void update(){
+    
+    if(mousePressed && mouseX >= (x+13) && mouseX <= (x+itemSize-13) 
+    && mouseY >= (y+18) && mouseX <= (y+itemSize-30)){
+      x = mouseX-66;
+      y = mouseY-66;
+    }
+    if(mousePressed = false){
+      x = 453;
+      y = 260;
+    }
+  }
+}
