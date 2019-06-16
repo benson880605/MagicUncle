@@ -63,6 +63,12 @@ final int COOKING_GAME_RUN = 31;
 final int COOKING_GAME_WIN = 32;
 final int COOKING_GAME_LOSE = 33;
 
+PImage cbackground;
+PImage bread, cheese, tomato, onion, ccabbage;
+PImage[][]eggImages, steakImages, baconImages;
+
+int itemSize = 132;
+
 
 
 ////////////////////////////////////////////////////////////
