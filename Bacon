@@ -1,0 +1,40 @@
+class Bacon {
+  
+  float x,y;
+  float health = 40;
+  float cookDuration = 2;
+  
+  Bacon(float x, float y, float health, float cookDuration){
+    this.health = health;
+    this.cookDuration = cookDuration;
+  }
+  
+  void display(){
+    
+    if(health > 0){
+      image(baconImages[2],120,350);
+    
+      if(health > 10){
+        image(baconImages[1],120,350);
+      }
+      
+      if(health > 20){
+        image(baconImages[0],120,350);
+      }
+    
+    }else{
+      image(baconImages[3],120,350);
+    }
+    
+  }
+  
+  
+  
+  void update(){
+    if(mousePressed){
+      health = health - cookDuration;
+    }
+  }
+  
+  
+}
