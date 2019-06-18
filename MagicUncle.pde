@@ -179,9 +179,6 @@ void draw() {
     specialFood.checkCollision();
     specialFood.update();
     
-    // city Front
-    cityFront.display();
-    cityFront.update();
     
     // fat UI
     A_fattyUI.display();
@@ -190,6 +187,11 @@ void draw() {
     
     // uncle
     magicA_Uncle.display();
+    
+    // city Front
+    cityFront.display();
+    cityFront.update();
+    
 
     
     

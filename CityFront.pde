@@ -1,5 +1,5 @@
 class CityFront{
-
+  int bgX ;
   CityFront(){
   }
   
@@ -11,7 +11,7 @@ class CityFront{
 
   void update(){
   
-    bgX -= bgSpeed/10;
+    bgX -= bgSpeed*2;
     if( bgX <= -960 ){ bgX = 0 ;}
   
   }
