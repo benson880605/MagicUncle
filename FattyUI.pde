@@ -4,10 +4,11 @@ class FattyUI{
   float fattyValue;
   float fattyValueX , fattyValueY , fattyValueH;
   float fattyUpdateValue = 0.5 ;
+  float fattyValueWin = 800 ;
   
   FattyUI(){
-    fattyValueX = 50;
-    fattyValueY = 50;
+    fattyValueX = 100;
+    fattyValueY = 75;
     fattyValueH = 40;
     fattyValue = INIT_FATTY_VALUE;
     
@@ -29,7 +30,7 @@ class FattyUI{
       }
       gameState = A_GAME_LOSE ;
     }
-    if(fattyValue >= 800) gameState = A_GAME_WIN ;
+    if(fattyValue >= fattyValueWin) gameState = A_GAME_WIN ;
   }
   
 

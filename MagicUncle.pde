@@ -9,12 +9,13 @@ CityBack cityBack = new CityBack();
 CityFront cityFront = new CityFront();
 SpecialFood specialFood = new SpecialFood();
 Road road = new Road();
+Head headImg = new Head();
 
 final int ROAD_POS_Y = 260; 
 final int ROAD_HEIGHT = 80; 
 final int FOOD_VALUE = 20; 
 
-PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , win , lose , specialFoodImg ;
+PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg ;
 PImage foodImg[] = new PImage [2];
 
 PImage fastFood , healthFood;
@@ -105,6 +106,9 @@ void setup() {
   A_uncle = loadImage("img/A_uncle.png"); 
   fatty = loadImage("img/A_fatty.png");
   head = loadImage("img/A_head.png");
+  head2 = loadImage("img/A_head2.png");
+  head3 = loadImage("img/A_head3.png");
+  head4 = loadImage("img/A_head4.png");
   roadImg = loadImage("img/A_road.png");
   foodImg[0] = loadImage("img/A_fastFood1.png");
   foodImg[1] = loadImage("img/A_healthFood1.png");
@@ -187,12 +191,15 @@ void draw() {
     
     // uncle
     magicA_Uncle.display();
+    magicA_Uncle.update();
     
     // city Front
     cityFront.display();
     cityFront.update();
     
-
+    // head
+    headImg.display();
+    headImg.update();
     
     
     break;
@@ -476,12 +483,14 @@ void draw() {
       
       case UP:
         magicA_Uncle.uncleY-= 80;
+        magicA_Uncle.baseUncleY -= 80 ;
         magicA_Uncle.boundryLimit();
       break;
       
       case DOWN:
         magicA_Uncle.uncleY+= 80;
         magicA_Uncle.boundryLimit();
+        magicA_Uncle.baseUncleY += 80 ;
       break;
     }
     break;

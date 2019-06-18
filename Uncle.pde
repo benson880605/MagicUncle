@@ -1,6 +1,6 @@
 class A_Uncle{
   
-  int uncleX, uncleY, uncleW, uncleH;
+  float uncleX, uncleY, uncleW, uncleH , baseUncleY , realUncleH ;
   int frameCountNow ;
   PImage img;
   
@@ -9,26 +9,22 @@ class A_Uncle{
     uncleY = 320;
     uncleW = 60;
     uncleH = 80;
+    realUncleH = 10 ;
+    baseUncleY = 320 ;
     img = A_uncle;
   }
   
   void boundryLimit(){
-    if(uncleY <= 240 ){ uncleY = 240 ;}
-    if(uncleY >= 400 ){ uncleY = 400 ;}
+    if(uncleY <= 240 ){ uncleY = 240 ; baseUncleY = 240 ;}
+    if(uncleY >= 400 ){ uncleY = 400 ; baseUncleY = 320 ; }
   }
 
   void display(){
     image( A_uncle , uncleX , uncleY , uncleW , uncleH );
   }
   
-  //void update(){
-  //  frameCountNow = frameCount ;
-  //  uncleX += uncleSpeed ;
-  //  if(frameCountNow % 60 = 0){
-    
-  //  };
-    
-    
-  //}
+  void update(){
+    uncleY = baseUncleY + 6*sin(frameCount/5);
+  }
 
 }

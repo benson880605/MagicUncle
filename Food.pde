@@ -41,7 +41,7 @@ class Food {
   
     for(int i = 0 ; i < A_foods.length ; i ++ ){
     
-      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY+20 , magicA_Uncle.uncleW , magicA_Uncle.uncleH , foodX[i] , foodY[i] , ROAD_HEIGHT , ROAD_HEIGHT )){
+      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY + 40 , magicA_Uncle.uncleW , magicA_Uncle.realUncleH , foodX[i] , foodY[i] , ROAD_HEIGHT , ROAD_HEIGHT )){
         A_fattyUI.fattyValue += foodValue[i];
         foodY[i] = 1000 ;
       }
