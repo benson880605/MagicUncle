@@ -1,5 +1,5 @@
 //bubbleVariable//
-final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 ;
+final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 , A_GAME_CONV2 = 14;
 int gameState ;
 
 A_Uncle magicA_Uncle = new A_Uncle();
@@ -15,8 +15,9 @@ final int ROAD_POS_Y = 260;
 final int ROAD_HEIGHT = 80; 
 final int FOOD_VALUE = 20; 
 
-PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg , A_intro01 ;
+PImage headUI , A_conv01 , A_conv02 , cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg , A_intro01 ;
 PImage foodImg[] = new PImage [4];
+PImage convImg = A_conv01;
 
 PImage fastFood , healthFood;
 
@@ -117,6 +118,9 @@ void setup() {
   foodImg[2] = loadImage("img/A_hamberger_2.png");
   specialFoodImg = loadImage("img/A_specialFood.png");
   A_intro01 = loadImage("img/A_intro1.png");
+  A_conv01 = loadImage("img/A_conv01.png");
+  A_conv02 = loadImage("img/A_conv02.png");
+  headUI = loadImage("img/headUI.png");
   win = loadImage("img/A_win.png");
   lose = loadImage("img/A_lose.png");
   
@@ -227,12 +231,6 @@ void draw() {
     specialFood.checkCollision();
     specialFood.update();
     
-    
-    // fat UI
-    A_fattyUI.display();
-    A_fattyUI.update();
-    
-    
     // uncle
     magicA_Uncle.display();
     magicA_Uncle.update();
@@ -245,16 +243,49 @@ void draw() {
     headImg.display();
     headImg.update();
     
+    // fat UI
+    A_fattyUI.display();
+    A_fattyUI.update();
+    
     
     break;
     
     case A_GAME_WIN:
-    image( win , 0 , 0 );
-    if(mousePressed){
-      gameState = A_GAME_RUN ;
-      A_fattyUI.fattyValue = A_fattyUI.INIT_FATTY_VALUE;
     
-  }
+    // city Back
+    
+    cityBack.display();
+    cityBack.update();
+    
+    //Road
+    road.display();
+    road.update();
+    
+    // A_foods
+    
+    A_foods.display();
+    
+    specialFood.display();
+    specialFood.checkCollision();
+    
+    // uncle
+    magicA_Uncle.display();
+    
+    // city Front
+    cityFront.display();
+    cityFront.update();
+    
+    // head
+    headImg.display();
+    headImg.update(head4);
+    
+    // fat UI
+    A_fattyUI.display();
+    A_fattyUI.update(A_fattyUI.fattyValueWin);
+    
+    // conv
+    image( A_conv01 , 0 , 300 );
+    
     break;
     
     case A_GAME_LOSE:
@@ -580,9 +611,9 @@ void draw() {
     }
     break;
     
-    case A_GAME_WIN:
-    gameState=BUBBLE_GAME_START;
-    break;
+    //case A_GAME_WIN:
+    //gameState=BUBBLE_GAME_START;
+    //break;
 //BubbleState//
     case BUBBLE_GAME_START:
     gameState=BUBBLE_GAME_RUN;  
