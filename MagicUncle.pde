@@ -1,5 +1,5 @@
 //bubbleVariable//
-final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 ;
+final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 ;
 int gameState ;
 
 A_Uncle magicA_Uncle = new A_Uncle();
@@ -15,7 +15,7 @@ final int ROAD_POS_Y = 260;
 final int ROAD_HEIGHT = 80; 
 final int FOOD_VALUE = 20; 
 
-PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg ;
+PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg , A_intro01 ;
 PImage foodImg[] = new PImage [4];
 
 PImage fastFood , healthFood;
@@ -114,10 +114,11 @@ void setup() {
   foodImg[1] = loadImage("img/A_cabbage.png");
   foodImg[2] = loadImage("img/A_hamberger_2.png");
   specialFoodImg = loadImage("img/A_specialFood.png");
+  A_intro01 = loadImage("img/A_intro1.png");
   win = loadImage("img/A_win.png");
   lose = loadImage("img/A_lose.png");
   
-  gameState = A_GAME_RUN;
+  gameState = A_GAME_START;
 //bubble_setup//
   //imageMode(CENTER);
   size(960,540);
@@ -164,6 +165,41 @@ void draw() {
     
   switch(gameState) {
 //cityrunState//
+
+    case A_GAME_START:
+    
+    
+    // city Back
+    
+    cityBack.display();
+    cityBack.update();
+    
+    //Road
+    road.display();
+    road.update();
+    
+    // fat UI
+    A_fattyUI.display();
+    
+    // uncle
+    magicA_Uncle.display();
+    magicA_Uncle.update();
+    
+    // city Front
+    cityFront.display();
+    cityFront.update();
+    
+    // head
+    headImg.display();
+    headImg.update();
+    
+    
+    putBlackBackground();
+    image( A_intro01 , 0 , 0 );
+    if(keyPressed) gameState = A_GAME_RUN ;
+    
+    break;
+    
     case A_GAME_RUN:
    
     // city Back
@@ -216,13 +252,46 @@ void draw() {
     break;
     
     case A_GAME_LOSE:
+    
+    // city Back
+    
+    cityBack.display();
+    cityBack.update();
+    
+    //Road
+    road.display();
+    road.update();
+    
+    // A_foods
+    
+    A_foods.display();
+    
+    specialFood.display();
+    
+    
+    // fat UI
+    A_fattyUI.display();    
+    
+    // uncle
+    magicA_Uncle.display();
+    magicA_Uncle.update();
+    
+    // city Front
+    cityFront.display();
+    cityFront.update();
+    
+    // head
+    headImg.display();
+    headImg.update();
+    
+    putBlackBackground();
     image( lose , 0 , 0 );
+    
     if(mousePressed){
       gameState = A_GAME_RUN ;
       A_fattyUI.fattyValue = A_fattyUI.INIT_FATTY_VALUE;
-    
-  }
-    
+     }
+         
     break;
 //cityrunState//
     
@@ -639,5 +708,12 @@ String D_convertFrameToTimeString(int frames){
   result += ":";
   result += nf(floor(totalSeconds%60), 2);
   return result;
+}
+
+void putBlackBackground(){
+
+  fill(0 , 200 );
+  rect( 0 , 0 , width , height);
+  
 }
 //shoot function//
