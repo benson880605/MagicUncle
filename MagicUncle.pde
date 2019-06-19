@@ -1,5 +1,5 @@
 //bubbleVariable//
-final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 , A_GAME_CONV2 = 14;
+final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 , A_GAME_CONV2 = 14 , A_GAME_RUNAWAY = 15 ;
 int gameState ;
 
 A_Uncle magicA_Uncle = new A_Uncle();
@@ -285,6 +285,46 @@ void draw() {
     
     // conv
     image( A_conv01 , 0 , 300 );
+    
+    if( key == ENTER ){ gameState = A_GAME_RUNAWAY ; }
+    
+    break;
+   
+    case A_GAME_RUNAWAY :
+    
+    // city Back
+    
+    cityBack.display();
+    cityBack.update();
+    
+    //Road
+    road.display();
+    road.update();
+    
+    // A_foods
+    
+    A_foods.display();
+    
+    specialFood.display();
+    specialFood.checkCollision();
+    
+    // uncle
+    magicA_Uncle.display();
+    
+    // city Front
+    cityFront.display();
+    cityFront.update();
+    
+    // head
+    headImg.display();
+    headImg.update(head4);
+    
+    // fat UI
+    A_fattyUI.display();
+    A_fattyUI.update(A_fattyUI.fattyValueWin);
+    
+    //
+    magicA_Uncle.uncleX += 10 ;
     
     break;
     
