@@ -668,7 +668,7 @@ for(int i = 0; i < vegetables.length;i++){
    switch(keyCode) {
       //jump to specific stage//
       case '1':
-      gameState=A_GAME_RUN;
+      gameState=A_GAME_START;
       break;
       case '2':
       gameState=A_GAME_WIN;
