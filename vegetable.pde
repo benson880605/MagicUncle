@@ -6,7 +6,6 @@ class Vegetable{
   float maxLiftStr=5;
   boolean isAlive = true;
   boolean wraped=false;
-
   
   void move(){
     y+=speed-liftStr;
@@ -15,7 +14,8 @@ class Vegetable{
   }
   
   void display(){
-    image(B_vegetable,x,y,size,size);  
+    if(freezeTimer>0){image(B_vegetableFreeze,x,y,size,size);}else{
+    image(B_vegetable,x,y,size,size);  }
   }
   
   Vegetable(float x,float y,float size,float speed){
@@ -58,7 +58,7 @@ class Vegetable{
        deadVegetableY3=y;
        deadVegetableS3=size;
        deadVegetableCount++;
-       gameState=BUBBLE_GAME_LOSE;
+
        case 3:
               
        break;
