@@ -24,7 +24,7 @@ class SpecialFood{
   }
 
   void checkCollision(){
-      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY+20 , magicA_Uncle.uncleW , magicA_Uncle.uncleH , specialFoodX , specialFoodY , foodSize , foodSize )){
+      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY+20 , magicA_Uncle.uncleW , magicA_Uncle.uncleH , specialFoodX , specialFoodY , foodSize - 40 , foodSize -40 )){
         specialFoodY = 1000 ;
         bgSpeed *= 3;
         frameCountNow = frameCount ;

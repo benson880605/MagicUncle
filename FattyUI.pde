@@ -1,6 +1,6 @@
 class FattyUI{
   
-  final int INIT_FATTY_VALUE = 740;
+  final int INIT_FATTY_VALUE = 500;
   float fattyValue;
   float fattyValueX , fattyValueY , fattyValueH;
   float fattyUpdateValue = 0.5 ;

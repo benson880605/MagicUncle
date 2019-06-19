@@ -53,7 +53,10 @@ class Food {
     }
   }
   
-  void update(){
+  void restart(){
+    for(int i = 0 ; i < foodX.length ; i ++ ){
+      foodX[i] += 1440 ;
+    }
     
   }
 }
