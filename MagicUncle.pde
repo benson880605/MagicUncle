@@ -590,6 +590,9 @@ for(int i = 0; i < vegetables.length;i++){
     image(D_uncleImg,width - 150, height-170,100,100);
     putBlackBackground();
     image(D_starts[startsNbr],0,0,960,540);
+    tint(255,80+30*sin(frameCount/10));
+    image(B_Enter,0,0,width,height);
+    tint(255,255); 
     magicGirl.health = 100;
     D_timer = 5400;
     break;
@@ -652,6 +655,9 @@ for(int i = 0; i < vegetables.length;i++){
     image(D_uncleImg,width - 150, height-170,100,100);
     putBlackBackground();
     image(D_gameover,0,0,960,540);
+    tint(255,80+30*sin(frameCount/10));
+    image(restart,0,0,width,height);
+    tint(255,255);
     break;
     
 //shootState//
