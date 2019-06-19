@@ -75,7 +75,7 @@ PImage D_background6,D_gameover,  D_gamewin;
 PImage D_girlImg, D_girlhurtImg,D_uncleImg;
 PImage D_carrotImg,D_cabbageImg;
 PImage D_hamburgerImg;
-PImage D_startImg;
+PImage D_startImg,D_startbuttomImg,D_restartbuttomImg;
 
 int D_foodNumber = 10;
 int D_timer = 5400;
@@ -147,6 +147,8 @@ void setup() {
     D_hamburgerImg = loadImage("img/hamburger.png");
     D_girlhurtImg = loadImage("img/girlhurt.png");
     D_startImg = loadImage("img/D_start.png");
+    D_startbuttomImg = loadImage("img/D_startbuttom.png");
+    D_restartbuttomImg = loadImage("img/D_restartbuttom.png");
     
     //font
     D_font = createFont("font/comic.ttf", 54);
@@ -412,9 +414,12 @@ void draw() {
     
 //shootState//
     case D_GAME_START:
-    imageMode(CORNER);
     image(D_background6,0,0,960,540);
+    image(D_girlImg,50,50,106,116);
+    image(D_uncleImg,width - 150, height-170,100,100);
+    putBlackBackground();
     image(D_startImg,0,0,960,540);
+    image(D_startbuttomImg,0,5*sin(frameCount/10),960,540);
     break;
     
     case D_GAME_RUN:
@@ -466,7 +471,9 @@ void draw() {
     break;
     
     case D_GAME_OVER:
+    putBlackBackground();
     image(D_gameover,0,0,960,540);
+    image(D_restartbuttomImg,0,5*sin(frameCount/10),960,540);
     break;
     
 //shootState//
@@ -641,6 +648,15 @@ void keyReleased(){
     switch(key){
       case ENTER:
       uncle.fire();
+      break;
+    }
+    break;
+    case D_GAME_OVER:
+    switch(key){
+      case ENTER:
+      magicGirl.health = 100;
+      D_timer = 5400;
+      gameState = D_GAME_RUN;
       break;
     }
     break;
