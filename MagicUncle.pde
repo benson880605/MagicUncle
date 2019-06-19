@@ -19,6 +19,9 @@ PImage headUI , A_conv01 , A_conv02 , cityBackImg, cityFrontImg , A_uncle , fatt
 PImage foodImg[] = new PImage [4];
 PImage convImg = A_conv01;
 
+PImage intros[] = new PImage [4] ;
+int introsNbr = 0 ;
+
 PImage fastFood , healthFood;
 
 float bgX = 0 ;
@@ -123,6 +126,9 @@ void setup() {
   headUI = loadImage("img/headUI.png");
   win = loadImage("img/A_win.png");
   lose = loadImage("img/A_lose.png");
+  for(int i = 0 ; i < intros.length ; i ++){
+    intros[i] = loadImage( "img/A_intro" +i+ ".png");
+  }
   
   gameState = A_GAME_START;
 //bubble_setup//
@@ -205,8 +211,7 @@ void draw() {
     
     
     putBlackBackground();
-    image( A_intro01 , 0 , 0 );
-    if(keyPressed) gameState = A_GAME_RUN ;
+    image( intros[introsNbr] , 0 , 0 );
     
     break;
     
@@ -225,7 +230,6 @@ void draw() {
     
     A_foods.display();
     A_foods.checkCollision();
-    A_foods.update();
     
     specialFood.display();
     specialFood.checkCollision();
@@ -363,11 +367,6 @@ void draw() {
     
     putBlackBackground();
     image( lose , 0 , 0 );
-    
-    if(mousePressed){
-      gameState = A_GAME_RUN ;
-      A_fattyUI.fattyValue = A_fattyUI.INIT_FATTY_VALUE;
-     }
          
     break;
 //cityrunState//
@@ -591,6 +590,19 @@ void draw() {
       case '0':
       gameState=COOKING_GAME_WIN;
       break; 
+      
+      case ENTER:
+       introsNbr ++ ;
+       if(introsNbr == 4 && key == ENTER ) gameState = A_GAME_RUN ;
+       if(gameState == A_GAME_LOSE){
+         gameState = A_GAME_RUN ;
+         A_fattyUI.fattyValue = A_fattyUI.INIT_FATTY_VALUE;
+         specialFood.specialFoodX += width ;
+         A_foods.restart();
+       }
+       
+      break;
+      
       //case 'a':
       //gameState=COOKING_GAME_LOSE;
       //break;
