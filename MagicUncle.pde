@@ -92,7 +92,7 @@ Arrowhead arrowhead;
 final int D_GAME_START = 40,D_GAME_RUN = 41,D_GAME_OVER = 42,D_GAME_WIN = 43;
 
 
-float wordFlowindY = 5*sin(frameCount/10);
+float wordFlowingY;
 
 
 ////////////////////////////////////////////////////////////
@@ -160,6 +160,8 @@ void setup() {
     magicGirl = new Girl(50,50);
     uncle = new D_Uncle(width - 150, height-170);
     arrowhead = new Arrowhead(width - 180, height-120);
+    
+    wordFlowingY = 5*sin(frameCount/10);
 //shoot setup//
   
 }
@@ -422,7 +424,7 @@ void draw() {
     image(D_uncleImg,width - 150, height-170,100,100);
     putBlackBackground();
     image(D_startImg,0,0,960,540);
-    image(D_startbuttomImg,0,wordFlowindY,960,540);
+    image(D_startbuttomImg,0,5*sin(frameCount/10),960,540);
     magicGirl.health = 100;
     D_timer = 5400;
     break;
@@ -478,7 +480,7 @@ void draw() {
     case D_GAME_OVER:
     putBlackBackground();
     image(D_gameover,0,0,960,540);
-    image(D_restartbuttomImg,0,wordFlowindY,960,540);
+    image(D_restartbuttomImg,0,5*sin(frameCount/10),960,540);
     break;
     
 //shootState//
