@@ -1,7 +1,7 @@
 class Player{
   float x,y;
   Bubble[] bubbles;
-  PImage uncleDisplay = B_uncleRight;
+  PImage uncleDisplay = B_uncleStandard_R;
   float bubbleSize = 15;
   float speed = 5;
   int maxBubbleCount=6;
@@ -9,20 +9,30 @@ class Player{
   void update(){   
     accelerate();
     y=460+6*sin(frameCount/5);
+    //image when still
+    if(B_faceR){uncleDisplay = B_uncleStandard_R;}else{uncleDisplay = B_uncleStandard_L;}
+    if(B_upState&&B_faceR){uncleDisplay = B_uncleBlowing_R;}
+    if(B_upState&&!B_faceR){uncleDisplay = B_uncleBlowing_L;}
+
+
+    //left
     if(B_leftState&&x>30&&!B_upState){    
-    uncleDisplay = B_uncleLeft;
+    uncleDisplay = B_uncleFlying_L;
     x-=speed;
-
-
-
+    }
+    //right
+    if(B_rightState&&x<width-30&&!B_upState){
+    uncleDisplay = B_uncleFlying_R;
+    x+=speed;
+    }  
+    
+    
+    if(castingTimer>0){
+    uncleDisplay = (B_faceR)?B_uncleCasting_R:B_uncleCasting_L;
     }
     
-    if(B_rightState&&x<width-30&&!B_upState){
-    uncleDisplay = B_uncleRight;
-    x+=speed;
-    }   
+    image(uncleDisplay,x,y,160,160);
     
-    image(uncleDisplay,x,y,120,120);
     
 
     
@@ -39,6 +49,9 @@ class Player{
   void blow(){ 
     for(int i = 0; i < bubbles.length; i++){
       if(bubbles[i]==null||!bubbles[i].isAlive){
+        if(missile){
+         bubbleSize=130; 
+        }
         bubbleSize+=3.5;
         bubbleSize=(bubbleSize>130)?130:bubbleSize; 
       }
@@ -62,7 +75,7 @@ class Player{
   
   
   void accelerate(){
-    if(B_accelerate&&accMana>0){speed=20;}
+    if(B_accelerate&&mana>0){speed=20;}
     else{speed = 5;}
     
   }
