@@ -157,7 +157,7 @@ void setup() {
     D_restartbuttomImg = loadImage("img/D_restartbuttom.png");
     
     //font
-    D_font = createFont("font/comic.ttf", 54);
+    D_font = createFont("font/jackeyfont.ttf", 54);
     textFont(D_font);
     
     //object
