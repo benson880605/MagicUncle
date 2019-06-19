@@ -95,12 +95,14 @@ PImage[][]eggImages, steakImages, baconImages;
 int itemSize = 132;
 
 //shoot gamestate & variable
-PImage D_background6,D_gameover,  D_gamewin;
+PImage D_background6,D_gameover, D_gamewin;
 PImage D_girlImg, D_girlhurtImg,D_uncleImg;
 PImage D_carrotImg,D_cabbageImg;
 PImage D_hamburgerImg;
-PImage D_startImg,D_startbuttomImg,D_restartbuttomImg;
 PImage D_conv;
+
+PImage D_starts[] = new PImage [3];
+int startsNbr = 0;
 
 int D_foodNumber = 10;
 int D_timer = 5400;
@@ -197,10 +199,10 @@ void setup() {
     D_cabbageImg = loadImage("img/cabbage.png");
     D_hamburgerImg = loadImage("img/hamburger.png");
     D_girlhurtImg = loadImage("img/girlhurt.png");
-    D_startImg = loadImage("img/D_start.png");
-    D_startbuttomImg = loadImage("img/D_startbuttom.png");
-    D_restartbuttomImg = loadImage("img/D_restartbuttom.png");
     D_conv = loadImage("img/D_Conversation.png");
+    for(int i = 0 ; i < D_starts.length ; i ++){
+      D_starts[i] = loadImage( "img/D_start" +i+ ".png");
+    }
     
     //font
     D_font = createFont("font/jackeyfont.ttf", 54);
@@ -479,7 +481,7 @@ void draw() {
   if(freezeCoolDown>0){freezeCoolDown--;}
   if(missileCoolDown>0){missileCoolDown--;}
   //drop vegetable
-    B_dropTimer++;
+  if(freezeTimer==0){B_dropTimer++;}
   if(B_dropTimer >= B_dropInterval){
     B_dropTimer = 0;
     drop();
@@ -587,8 +589,7 @@ for(int i = 0; i < vegetables.length;i++){
     image(D_girlImg,50,50,106,116);
     image(D_uncleImg,width - 150, height-170,100,100);
     putBlackBackground();
-    image(D_startImg,0,0,960,540);
-    image(D_startbuttomImg,0,5*sin(frameCount/10),960,540);
+    image(D_starts[startsNbr],0,0,960,540);
     magicGirl.health = 100;
     D_timer = 5400;
     break;
@@ -648,7 +649,6 @@ for(int i = 0; i < vegetables.length;i++){
     case D_GAME_OVER:
     putBlackBackground();
     image(D_gameover,0,0,960,540);
-    image(D_restartbuttomImg,0,5*sin(frameCount/10),960,540);
     break;
     
 //shootState//
@@ -671,6 +671,7 @@ for(int i = 0; i < vegetables.length;i++){
       gameState=BUBBLE_GAME_START;
       break; 
       case '5':
+      startsNbr = 0;
       gameState=D_GAME_START;
       break; 
       case '6':
@@ -686,12 +687,14 @@ for(int i = 0; i < vegetables.length;i++){
       gameState=COOKING_GAME_RUN;
       break; 
       case '0':
-      gameState=COOKING_GAME_WIN;
+      gameState=A_GAME_START;
       break; 
       
       case ENTER:
+      if( gameState == A_GAME_START){
        introsNbr ++ ;
        if(introsNbr == 4 && key == ENTER ) gameState = A_GAME_RUN ;
+     }
        if(gameState == A_GAME_LOSE){
          gameState = A_GAME_RUN ;
          A_fattyUI.fattyValue = A_fattyUI.INIT_FATTY_VALUE;
@@ -874,7 +877,10 @@ void keyReleased(){
   case D_GAME_START:
     switch(key){
       case ENTER:
-      gameState = D_GAME_RUN;
+      startsNbr++;
+      if(startsNbr == 3 && key == ENTER){
+        gameState = D_GAME_RUN;
+      }
       break;
     }
     break;
