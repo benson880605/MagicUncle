@@ -86,13 +86,28 @@ Vegetable vegetables[];
 final int COOKING_GAME_START = 30;
 final int COOKING_GAME_RUN = 31;
 final int COOKING_GAME_WIN = 32;
-final int COOKING_GAME_LOSE = 33;
+final int COOKING_GAME_OVER = 33;
 
-PImage cbackground;
-PImage bread, cheese, tomato, onion, ccabbage;
-PImage[][]eggImages, steakImages, baconImages;
+PImage C_background;
+PImage C_bread, C_cheese, C_tomato, C_onion, C_cabbage;
+PImage[]eggImages, steakImages, baconImages;
+PImage C_lose, C_start, C_enter;
 
-int itemSize = 132;
+Bacon bacon;
+Bread bread;
+Cabbage cabbage;
+Cheese cheese;
+Egg egg;
+Onion onion;
+Steak steak;
+Tomato tomato;
+
+final int C_GAME_INIT_TIMER = 3600;
+int gameTimer = C_GAME_INIT_TIMER;
+float C_lineY = 92.0;
+boolean C_enterPressed = false;
+
+//cooking
 
 //shoot gamestate & variable
 PImage D_background6,D_gameover, D_gamewin;
@@ -187,6 +202,47 @@ void setup() {
   vegetables = new Vegetable[B_maxVegetableCount];
   //bubble_setup//
   
+  //cook setup
+  C_background = loadImage("img/C_background.jpg");
+  C_bread = loadImage("img/C_bread.png");
+  C_cheese = loadImage("img/C_cheese.png");
+  C_tomato = loadImage("img/C_tomato.png");
+  C_onion = loadImage("img/C_onion.png");
+  C_cabbage = loadImage("img/C_cabbage.png");
+  C_lose = loadImage("img/C_lose.png");
+  C_start = loadImage("img/C_start.png");
+  C_enter = loadImage("img/C_Enter.png");
+  bacon = new Bacon();
+  bread = new Bread();
+  cabbage = new Cabbage();
+  cheese = new Cheese();
+  egg = new Egg();
+  onion = new Onion();
+  steak = new Steak();
+  tomato = new Tomato();
+  
+  //Load PImage[]eggs
+  eggImages = new PImage[4];
+  eggImages[0] = loadImage("img/C_egg0.png");
+  eggImages[1] = loadImage("img/C_egg1.png");
+  eggImages[2] = loadImage("img/C_egg2.png");
+  eggImages[3] = loadImage("img/C_egg3.png");
+  
+  //steak
+  steakImages = new PImage[5];
+  steakImages[0] = loadImage("img/C_steak0.png");
+  steakImages[1] = loadImage("img/C_steak1.png");
+  steakImages[2] = loadImage("img/C_steak2.png");
+  steakImages[3] = loadImage("img/C_steak3.png");
+  steakImages[4] = loadImage("img/C_steak4.png");
+  
+  //bacon
+  baconImages = new PImage[4];
+    baconImages[0] = loadImage("img/C_bacon0.png");
+    baconImages[1] = loadImage("img/C_bacon1.png");
+    baconImages[2] = loadImage("img/C_bacon2.png");
+    baconImages[3] = loadImage("img/C_bacon3.png");
+  //cook setup//
 //shoot setup//
     //size(960, 540, P2D);
     //frameRate(60);
@@ -581,7 +637,110 @@ for(int i = 0; i < vegetables.length;i++){
     
     break;
     //bubbleState//
+    //cookState//
+    case COOKING_GAME_START:
+    pushMatrix();
+    image(C_background,0,0);
+    stroke(#ffcc00);
+    strokeWeight(16);
+    line(907.5,418,907.5,92);
+    popMatrix();
     
+    image(C_onion,0,140);
+    image(C_cabbage,130,140);
+    image(C_cheese,265,150);
+    image(steakImages[0],400,150);
+    image(baconImages[0],535,150);
+    image(eggImages[0] ,665,140);
+    image(C_tomato,780,150);
+    image(C_bread,660,350);
+    
+    putBlackBackground();
+    image(C_enter,0,0);
+    image(C_start,0,0);
+    
+    if(C_enterPressed == true){
+      gameState = COOKING_GAME_RUN;
+      C_enterPressed = false;
+      }
+    
+    break;
+    
+    case COOKING_GAME_RUN:
+    
+    image(C_background,0,0);
+    
+    
+    stroke(#ffcc00);
+    strokeWeight(16);
+    line(907.5,418,907.5,C_lineY);
+    
+    C_lineY = C_lineY + 0.09;
+    
+
+    //steak
+    steak.display();
+    steak.update();
+    
+    //cheese
+    cheese.display();
+    cheese.update();
+    
+    //bacon
+    bacon.display();
+    bacon.update();
+    
+    //egg
+    egg.display();
+    egg.update();
+    
+    //bread
+    bread.display();
+    bread.update();
+    if( bread.rightPosition == true ) {
+      gameState = COOKING_GAME_WIN ;
+    };
+    
+    //onion
+    onion.display();
+    onion.update();
+    
+    //cabbage
+    cabbage.display();
+    cabbage.update();
+    
+    //tomato
+    tomato.display();
+    tomato.update();
+    
+    // Time UI
+    textAlign(RIGHT, BOTTOM);
+    String C_timeString = C_convertFrameToTimeString(gameTimer);
+    fill(0, 120);
+    text(C_timeString, 3, height + 3);
+    fill(C_getTimeTextColor(gameTimer));
+    text(C_timeString, 940, 500);
+      
+    gameTimer --;
+    if(gameTimer <= 0){
+      gameState = COOKING_GAME_OVER;
+    }
+    break;
+  
+    case COOKING_GAME_OVER:
+    putBlackBackground();
+    image(C_enter,0,0);
+    image(C_lose,0,0);
+    
+    
+    break;
+  
+    case COOKING_GAME_WIN:
+    image(C_background,0,0);
+    
+    break;
+  
+    //cookState//
 //shootState//
     case D_GAME_START:
     imageMode(CORNER);
@@ -698,6 +857,7 @@ for(int i = 0; i < vegetables.length;i++){
       case '0':
       gameState=A_GAME_START;
       break; 
+      
       
       case ENTER:
       if( gameState == A_GAME_START){
@@ -848,7 +1008,23 @@ for(int i = 0; i < vegetables.length;i++){
   }
   break;
 //BubbleState//
-
+//cooking//
+  case COOKING_GAME_START:
+    switch(key){
+      case ENTER:
+      gameState = COOKING_GAME_RUN;
+      break;
+    }
+    break;
+    
+    case COOKING_GAME_OVER:
+    switch(key){
+      case ENTER:
+      gameState = COOKING_GAME_RUN;
+      break;
+    }
+    break;
+//cooking//
   //shootState//
   
   }
@@ -881,6 +1057,23 @@ void keyReleased(){
 
    }
   break;
+  //cookState//
+  case COOKING_GAME_START:
+    switch(key){
+      case ENTER:
+      gameState = COOKING_GAME_RUN;
+      break;
+    }
+    break;
+    
+    case COOKING_GAME_OVER:
+    switch(key){
+      case ENTER:
+      gameState = COOKING_GAME_RUN;
+      break;
+    }
+    break;
+  //cookState//
   
 //shootState//
   case D_GAME_START:
@@ -927,7 +1120,34 @@ void mouseReleased(){
   }
 }
 //shoot function//
+//cook function//
+void addTime(float seconds){
+  gameTimer += round(seconds * 60);
+}
 
+color C_getTimeTextColor(int frames){
+  if(frames >= 7200){
+    return #ffffff;
+  }else if(frames >= 3600){
+    return #00ffff;
+  }else if(frames >= 1800){
+    return #ffcc00;
+  }else if(frames >= 600){
+    return #ff6600;
+  }
+
+  return #ff0000;
+}
+
+String C_convertFrameToTimeString(int frames){
+  String result = "";
+  float totalSeconds = float(frames) / 60;
+  result += nf(floor(totalSeconds/60), 2);
+  result += ":";
+  result += nf(floor(totalSeconds%60), 2);
+  return result;
+}
+//cook function//
 //bubble_function//
 void drop(){
     for(int i = 0; i < vegetables.length; i++){
