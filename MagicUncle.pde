@@ -422,6 +422,7 @@ void draw() {
     image(D_startImg,0,0,960,540);
     image(D_startbuttomImg,0,5*sin(frameCount/10),960,540);
     magicGirl.health = 100;
+    D_timer = 5400;
     break;
     
     case D_GAME_RUN:
