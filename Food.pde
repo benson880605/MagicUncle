@@ -2,6 +2,8 @@ class Food {
   
   int A_foods[] = new int [12];
   int foodX[] = new int [12];
+  int foodCurrentY[] = new int [12];
+  int foodSpeedY = 2;
   int foodY[] = new int [12];
   int foodValue[] = new int [12];
   int foodSize = 60;
@@ -14,6 +16,7 @@ class Food {
       A_foods[i] = floor(random(2));
       foodX[i] = 960 + ( i * ROAD_HEIGHT*6 ) + ROAD_HEIGHT * floor(random(6));
       foodY[i] = ROAD_POS_Y + ROAD_HEIGHT * floor(random(3));
+      foodCurrentY[i] = foodY[i];
     }
   }
 
@@ -25,9 +28,10 @@ class Food {
       img = foodImg[foodType];
       if( TranSpecialFood == true ) img = foodImg[0];
       if(img == foodImg[1]){ foodValue[i] = (-40) ; }
+      
       if(img == foodImg[0]){ foodValue[i] = 30 ; }
-
-      image( img , foodX[i] , foodY[i] );
+      foodCurrentY[i] = foodY[i];
+      image( img , foodX[i] , foodY[i] , 80 , 80 );
       foodX[i] -= bgSpeed*2 ;
       
       if( foodX[i] <= -ROAD_HEIGHT ){
@@ -48,5 +52,8 @@ class Food {
       
     }
   }
-
+  
+  void update(){
+    
+  }
 }

@@ -16,7 +16,7 @@ final int ROAD_HEIGHT = 80;
 final int FOOD_VALUE = 20; 
 
 PImage cityBackImg, cityFrontImg , A_uncle , fatty , roadImg , head , head2 , head3 , head4 , win , lose , specialFoodImg ;
-PImage foodImg[] = new PImage [2];
+PImage foodImg[] = new PImage [4];
 
 PImage fastFood , healthFood;
 
@@ -110,8 +110,9 @@ void setup() {
   head3 = loadImage("img/A_head3.png");
   head4 = loadImage("img/A_head4.png");
   roadImg = loadImage("img/A_road.png");
-  foodImg[0] = loadImage("img/A_fastFood1.png");
-  foodImg[1] = loadImage("img/A_healthFood1.png");
+  foodImg[0] = loadImage("img/A_hamberger.png");
+  foodImg[1] = loadImage("img/A_cabbage.png");
+  foodImg[2] = loadImage("img/A_hamberger_2.png");
   specialFoodImg = loadImage("img/A_specialFood.png");
   win = loadImage("img/A_win.png");
   lose = loadImage("img/A_lose.png");
@@ -178,6 +179,7 @@ void draw() {
     
     A_foods.display();
     A_foods.checkCollision();
+    A_foods.update();
     
     specialFood.display();
     specialFood.checkCollision();

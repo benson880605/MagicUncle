@@ -2,7 +2,7 @@ class SpecialFood{
 
   int specialFoodX ;
   int specialFoodY ;
-  int foodSize = 60;
+  int foodSize = 80;
   int frameCountNow ;
   PImage img;
   SpecialFood(){
@@ -12,7 +12,7 @@ class SpecialFood{
   }
   
   void display(){
-    image(specialFoodImg , specialFoodX , specialFoodY );
+    image(specialFoodImg , specialFoodX , specialFoodY , foodSize , foodSize );
   }
   
   void update(){
