@@ -414,7 +414,7 @@ void draw() {
     
 //shootState//
     case D_GAME_START:
-    imageMode(CENTER);
+    imageMode(CORNER);
     image(D_background6,0,0,960,540);
     image(D_girlImg,50,50,106,116);
     image(D_uncleImg,width - 150, height-170,100,100);
