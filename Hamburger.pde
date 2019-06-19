@@ -11,7 +11,7 @@ class Hamburger{
     pushStyle();
     translate(x, y);
     imageMode(CENTER);
-    image(img, 0, 0);
+    image(img, 0, 0,30,30);
     popStyle();
     popMatrix();
   }
