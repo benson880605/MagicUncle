@@ -728,6 +728,22 @@ for(int i = 0; i < vegetables.length;i++){
     break;
   
     case COOKING_GAME_OVER:
+    pushMatrix();
+    image(C_background,0,0);
+    stroke(#ffcc00);
+    strokeWeight(16);
+    line(907.5,418,907.5,92);
+    popMatrix();
+    
+    image(C_onion,0,140);
+    image(C_cabbage,130,140);
+    image(C_cheese,265,150);
+    image(steakImages[0],400,150);
+    image(baconImages[0],535,150);
+    image(eggImages[0] ,665,140);
+    image(C_tomato,780,150);
+    image(C_bread,660,350);
+    
     putBlackBackground();
     image(C_enter,0,0);
     image(C_lose,0,0);
@@ -1021,6 +1037,7 @@ for(int i = 0; i < vegetables.length;i++){
     switch(key){
       case ENTER:
       gameState = COOKING_GAME_RUN;
+      C_initGame();
       break;
     }
     break;
@@ -1070,6 +1087,7 @@ void keyReleased(){
     switch(key){
       case ENTER:
       gameState = COOKING_GAME_RUN;
+      
       break;
     }
     break;
@@ -1200,6 +1218,39 @@ void B_initGame(){
 
 void costMana(float a){
   mana-=a;
+}
+void C_initGame(){
+  final int C_GAME_INIT_TIMER = 3600;
+  bacon = new Bacon();
+  bread = new Bread();
+  cabbage = new Cabbage();
+  cheese = new Cheese();
+  egg = new Egg();
+  onion = new Onion();
+  steak = new Steak();
+  tomato = new Tomato();
+  
+  //Load PImage[]eggs
+  eggImages = new PImage[4];
+  eggImages[0] = loadImage("img/C_egg0.png");
+  eggImages[1] = loadImage("img/C_egg1.png");
+  eggImages[2] = loadImage("img/C_egg2.png");
+  eggImages[3] = loadImage("img/C_egg3.png");
+  
+  //steak
+  steakImages = new PImage[5];
+  steakImages[0] = loadImage("img/C_steak0.png");
+  steakImages[1] = loadImage("img/C_steak1.png");
+  steakImages[2] = loadImage("img/C_steak2.png");
+  steakImages[3] = loadImage("img/C_steak3.png");
+  steakImages[4] = loadImage("img/C_steak4.png");
+  
+  //bacon
+  baconImages = new PImage[4];
+    baconImages[0] = loadImage("img/C_bacon0.png");
+    baconImages[1] = loadImage("img/C_bacon1.png");
+    baconImages[2] = loadImage("img/C_bacon2.png");
+    baconImages[3] = loadImage("img/C_bacon3.png");
 }
 
 
