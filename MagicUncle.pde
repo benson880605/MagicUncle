@@ -77,6 +77,7 @@ PImage D_girlImg, D_girlhurtImg,D_uncleImg;
 PImage D_carrotImg,D_cabbageImg;
 PImage D_hamburgerImg;
 PImage D_startImg,D_startbuttomImg,D_restartbuttomImg;
+PImage D_conv;
 
 int D_foodNumber = 10;
 int D_timer = 5400;
@@ -155,6 +156,7 @@ void setup() {
     D_startImg = loadImage("img/D_start.png");
     D_startbuttomImg = loadImage("img/D_startbuttom.png");
     D_restartbuttomImg = loadImage("img/D_restartbuttom.png");
+    D_conv = loadImage("img/D_Conversation.png");
     
     //font
     D_font = createFont("font/jackeyfont.ttf", 54);
@@ -545,7 +547,11 @@ void draw() {
     break;
     
     case D_GAME_WIN:
-    image(D_gamewin,0,0,960,540);
+    image(D_background6,0,0,960,540);
+    magicGirl.update();
+    //image(D_girlhurtImg,50,50,106,116);
+    image(D_uncleImg,width - 150, height-170,100,100);
+    image(D_conv , 0 , 300 , 960 , 240 );
     break;
     
     case D_GAME_OVER:

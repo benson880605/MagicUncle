@@ -34,7 +34,10 @@ class Girl{
       }
     }
   }
-  void update(){}
+  void update(){
+    x-=1;
+    image(D_girlhurtImg,x,y+6*sin(frameCount/5),106,116);
+  }
   void summon(){
     for(int i = 0; i < 4; i++){
       foods[i] = new D_Food(random(200,400), (i*50)+20);
