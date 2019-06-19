@@ -647,6 +647,9 @@ for(int i = 0; i < vegetables.length;i++){
     break;
     
     case D_GAME_OVER:
+    image(D_background6,0,0,960,540);
+    image(D_girlImg,50,50,106,116);
+    image(D_uncleImg,width - 150, height-170,100,100);
     putBlackBackground();
     image(D_gameover,0,0,960,540);
     break;
