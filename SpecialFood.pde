@@ -2,7 +2,7 @@ class SpecialFood{
 
   int specialFoodX ;
   int specialFoodY ;
-  int foodSize = 80;
+  int foodSize = 60;
   int frameCountNow ;
   PImage img;
   SpecialFood(){
@@ -24,7 +24,7 @@ class SpecialFood{
   }
 
   void checkCollision(){
-      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY+20 , magicA_Uncle.uncleW , magicA_Uncle.uncleH , specialFoodX , specialFoodY , ROAD_HEIGHT , ROAD_HEIGHT )){
+      if(A_isHit( magicA_Uncle.uncleX , magicA_Uncle.uncleY+20 , magicA_Uncle.uncleW , magicA_Uncle.uncleH , specialFoodX , specialFoodY , foodSize , foodSize )){
         specialFoodY = 1000 ;
         bgSpeed *= 3;
         frameCountNow = frameCount ;
