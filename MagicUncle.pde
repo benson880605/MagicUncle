@@ -137,7 +137,7 @@ float wordFlowingY;
 
 void setup() {
   
-  size(960 ,540);
+  size(960 ,540, FX2D);
   noCursor(); 
   
    //video
