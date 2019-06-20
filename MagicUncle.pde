@@ -1,3 +1,13 @@
+//video//
+import processing.video.*;  
+Movie movieStart,hitByCabbage,meetGirl,last;              
+PImage runHover,movieEnd,restartButtun;
+final int Movie_Start = 0;
+final int Movie_End = 1;
+final int AtoB = 2;
+final int Ending = 3;
+
+
 //bubbleVariable//
 final int A_GAME_RUN = 11, A_GAME_WIN = 12 , A_GAME_LOSE = 13 , A_GAME_START = 10 , A_GAME_CONV2 = 14 , A_GAME_RUNAWAY = 15 ;
 int gameState ;
@@ -142,8 +152,24 @@ float wordFlowingY;
 
 void setup() {
   
-  size(960 ,540,FX2D);
-  noCursor();  //
+  size(960 ,540, FX2D);
+  noCursor(); 
+  
+   //video
+  frameRate(30);
+  movieStart = new Movie(this,"Comp 1234.mov");
+  hitByCabbage = new Movie(this,"Hit.mov");
+  meetGirl = new Movie(this,"meet MagicGirl (Converted).mov");
+  last = new Movie(this,"last.mov");
+  
+  
+  
+  meetGirl.play();
+  
+  
+  runHover = loadImage("img/runhover.png");
+  movieEnd = loadImage("img/movieEnd.png");
+  //
     
   cityFrontImg = loadImage("img/A_cityFront.png"); 
   cityBackImg = loadImage("img/A_cityBack.png");
@@ -168,10 +194,10 @@ void setup() {
     intros[i] = loadImage( "img/A_intro" +i+ ".png");
   }
   
-  gameState = A_GAME_START;
+  gameState = Movie_Start;
   //bubble_setup//
 
-  size(960,540,FX2D);
+
   B_uncleStandard_L = loadImage("img/B_uncleStandard_L.png");
   B_uncleStandard_R = loadImage("img/B_uncleStandard_R.png");
   B_uncleFlying_L = loadImage("img/B_uncleFlying_L.png");
@@ -278,6 +304,23 @@ void draw() {
     
     
   switch(gameState) {
+    // video  //
+    case Movie_Start:
+    if (movieStart.available()) {movieStart.read();}
+      movieStart.play();
+      image(movieStart, 0, 0, width, height);
+      float md = movieStart.duration();
+      float mt = movieStart.time();
+      if(mt == md){gameState = Movie_End;} 
+      break;
+      
+      case Movie_End:
+      if(mouseX > 392 && mouseY >409 && mouseX < 598 && mouseY < 483){
+      image(runHover,0,0);
+      if(mousePressed){gameState = A_GAME_START;}
+      }else{image(movieEnd,0,0,960,540);}
+      break;
+ 
 //cityrunState//
 
     case A_GAME_START:
@@ -428,6 +471,10 @@ void draw() {
     //
     magicA_Uncle.uncleX += 10 ;
     
+    if( magicA_Uncle.uncleX > width  ){
+      gameState = AtoB;
+    }
+    
     break;
     
     case A_GAME_LOSE:
@@ -467,6 +514,15 @@ void draw() {
     image( lose , 0 , 0 );
          
     break;
+    
+    case AtoB:
+      if (hitByCabbage.available()) {hitByCabbage.read();}
+      hitByCabbage.play();
+      image(hitByCabbage, 0, 0, width, height);
+      float mdS = hitByCabbage.duration();
+      float mtS = hitByCabbage.time();
+      if(mtS == mdS){gameState = BUBBLE_GAME_START;} 
+      break;
 //cityrunState//
     
     //bubbleState//
@@ -817,11 +873,13 @@ for(int i = 0; i < vegetables.length;i++){
     break;
     
     case D_GAME_WIN:
+    imageMode(CORNER);
     image(D_background6,0,0,960,540);
     magicGirl.update();
     //image(D_girlhurtImg,50,50,106,116);
     image(D_uncleImg,width - 150, height-170,100,100);
     image(D_conv , 0 , 300 , 960 , 240 );
+     
     break;
     
     case D_GAME_OVER:
@@ -836,6 +894,14 @@ for(int i = 0; i < vegetables.length;i++){
     break;
     
 //shootState//
+
+//last video//
+    case Ending:
+    if (last.available()) {last.read();}
+    last.play();
+    image(last, 0, 0, width, height);
+    break;
+    
     
 }    
 }
@@ -843,10 +909,10 @@ for(int i = 0; i < vegetables.length;i++){
    switch(keyCode) {
       //jump to specific stage//
       case '1':
-      gameState=A_GAME_RUN;
+      gameState=A_GAME_START;
       break;
       case '2':
-      gameState=A_GAME_WIN;
+      gameState=A_GAME_RUNAWAY;
       break;
       case '3':
       gameState=A_GAME_LOSE;
@@ -862,7 +928,7 @@ for(int i = 0; i < vegetables.length;i++){
       gameState=BUBBLE_GAME_WIN;
       break; 
       case '7':
-      gameState=BUBBLE_GAME_LOSE;
+      gameState=D_GAME_WIN;
       break; 
       case '8':
       gameState=COOKING_GAME_START;
@@ -949,9 +1015,9 @@ for(int i = 0; i < vegetables.length;i++){
     }
     break;
     
-    case A_GAME_WIN:
-    gameState=BUBBLE_GAME_START;
-    break;
+    //case A_GAME_WIN:
+    //gameState=BUBBLE_GAME_START;
+    //break;
 //BubbleState//
     case BUBBLE_GAME_START:
   if(key==ENTER){
@@ -1117,6 +1183,13 @@ void keyReleased(){
       magicGirl.health = 100;
       D_timer = 5400;
       gameState = D_GAME_RUN;
+      break;
+    }
+    break;
+    case D_GAME_WIN:
+    switch(key){
+      case ENTER:
+      gameState = Ending;
       break;
     }
     break;
